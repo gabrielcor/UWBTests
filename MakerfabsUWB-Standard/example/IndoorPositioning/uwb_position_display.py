@@ -4,6 +4,9 @@ import cmath
 import socket
 import json
 
+# register your image as a shape
+turtle.register_shape(r"C:\GitRepositories\UWBTests\MakerfabsUWB-Standard\example\IndoorPositioning\udp_uwb_tag\tag.gif")
+
 hostname = socket.gethostname()
 UDP_IP = socket.gethostbyname(hostname)
 print("***Local ip:" + str(UDP_IP) + "***")
@@ -102,9 +105,9 @@ def clean(t=turtle):
 
 
 def draw_ui(t):
-    write_txt(-300, 250, "UWB Positon", "black",  t, f=('Arial', 32, 'normal'))
+    write_txt(-300, 250, "Posición UWB", "black",  t, f=('Arial', 32, 'normal'))
     fill_rect(-400, 200, 800, 40, "black", t)
-    write_txt(-50, 205, "WALL", "yellow",  t, f=('Arial', 24, 'normal'))
+    write_txt(-50, 205, "PARED", "yellow",  t, f=('Arial', 24, 'normal'))
 
 
 def draw_uwb_anchor(x, y, txt, range, t):
@@ -114,14 +117,28 @@ def draw_uwb_anchor(x, y, txt, range, t):
               "black",  t, f=('Arial', 16, 'normal'))
 
 
+
+# def draw_uwb_tag(x, y, txt, t):
+#     pos_x = -250 + int(x * meter2pixel)
+#     pos_y = 150 - int(y * meter2pixel)
+#     r = 20
+#     fill_cycle(pos_x, pos_y, r, "blue", t)
+#     write_txt(pos_x, pos_y, txt + ": (" + str(x) + "," + str(y) + ")",
+#               "black",  t, f=('Arial', 16, 'normal'))
+
+
 def draw_uwb_tag(x, y, txt, t):
     pos_x = -250 + int(x * meter2pixel)
     pos_y = 150 - int(y * meter2pixel)
-    r = 20
-    fill_cycle(pos_x, pos_y, r, "blue", t)
+
+    t.shape(r"C:\GitRepositories\UWBTests\MakerfabsUWB-Standard\example\IndoorPositioning\udp_uwb_tag\tag.gif")
+    t.up()
+    t.goto(pos_x, pos_y)
+    t.stamp()   # places the image
+    t.up()
+
     write_txt(pos_x, pos_y, txt + ": (" + str(x) + "," + str(y) + ")",
               "black",  t, f=('Arial', 16, 'normal'))
-
 
 def read_data():
 
@@ -183,17 +200,17 @@ def main():
         list = read_data()
 
         for one in list:
-            if one["A"] == "1782":
+            if one["A"] == "1785":
                 clean(t_a1)
                 a1_range = uwb_range_offset(float(one["R"]))
-                draw_uwb_anchor(-250, 150, "A1782(0,0)", a1_range, t_a1)
+                draw_uwb_anchor(-250, 150, "A1785(0,0)", a1_range, t_a1)
                 node_count += 1
 
-            if one["A"] == "1783":
+            if one["A"] == "1786":
                 clean(t_a2)
                 a2_range = uwb_range_offset(float(one["R"]))
                 draw_uwb_anchor(-250 + meter2pixel * distance_a1_a2,
-                                150, "A1783(" + str(distance_a1_a2)+")", a2_range, t_a2)
+                                150, "A1786(" + str(distance_a1_a2)+")", a2_range, t_a2)
                 node_count += 1
 
         if node_count == 2:
