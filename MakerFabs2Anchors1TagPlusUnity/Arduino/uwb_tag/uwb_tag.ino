@@ -22,7 +22,7 @@ const uint8_t PIN_SS = 4;   // spi select pin
 
 const char * ssid = "blackcrow_01";
 const char * password = "8001017170";
-const char * udpAddress = "192.168.50.224"; //My UDP Server IP
+const char * udpAddress = "192.168.1.149"; //My UDP Server IP
 const int udpPort = 8080;
 
 boolean connected = false;

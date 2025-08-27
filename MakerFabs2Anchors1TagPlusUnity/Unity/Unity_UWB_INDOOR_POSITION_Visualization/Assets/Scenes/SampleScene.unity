@@ -3775,7 +3775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   port: 8080
-  ipAddress: 192.168.50.224
+  ipAddress: 192.168.1.149
   mLogText: {fileID: 1707089178}
 --- !u!4 &953458839
 Transform:
@@ -7952,10 +7952,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mLeftText: {fileID: 1218075503}
   mRightText: {fileID: 1085519848}
-  distanceBetweenTwoAnchors: 2.2
+  distanceBetweenTwoAnchors: 1.8
   samplingDataSize: 20
-  leftAnchorShortName: aabb
-  rightAnchorShortName: ccdd
+  leftAnchorShortName: 1785
+  rightAnchorShortName: 1786
 --- !u!4 &1764825006
 Transform:
   m_ObjectHideFlags: 0
