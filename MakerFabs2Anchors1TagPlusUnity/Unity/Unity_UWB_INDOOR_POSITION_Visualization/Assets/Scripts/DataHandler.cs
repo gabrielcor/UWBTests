@@ -57,8 +57,8 @@ public class DataHandler : MonoBehaviour
 
             if (anchor_ranges[0] != 0.00f && anchor_ranges[1] != 0.00f)
             {
-                mRightText.text = "Right Anchor\n" + RoundUp((float)anchor_ranges[0], 1) + " m";
-                mLeftText.text = "Left Anchor\n" + RoundUp((float)anchor_ranges[1], 1) + " m";
+                mRightText.text = "Derecha\n" + RoundUp((float)anchor_ranges[0], 1) + " m";
+                mLeftText.text = "Izquierda\n" + RoundUp((float)anchor_ranges[1], 1) + " m";
                 calcTag((float)anchor_ranges[0], (float)anchor_ranges[1], distanceBetweenTwoAnchors);
             }
         }
