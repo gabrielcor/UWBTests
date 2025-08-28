@@ -28,6 +28,11 @@ const int udpPort = 8080;
 boolean connected = false;
 WiFiUDP udp;
 
+// minimum and maximum range
+// outside of this ranges we consider the measure just noise
+float minimumRange = 0;
+float maximumRange = 8;
+
 void setup()
 {
     Serial.begin(115200);
@@ -54,29 +59,30 @@ void loop()
 
 void newRange()
 {
-    Serial.print("from: ");
-    Serial.print(DW1000Ranging.getDistantDevice()->getShortAddress(), HEX);
-    Serial.print("\t Range: ");
-    Serial.print(DW1000Ranging.getDistantDevice()->getRange());
-    Serial.print(" m");
-    Serial.print("\t RX power: ");
-    Serial.print(DW1000Ranging.getDistantDevice()->getRXPower());
-    Serial.println(" dBm");
+    float currentRange = DW1000Ranging.getDistantDevice()->getRange();
+    if ((currentRange >= minimumRange) && (currentRange <= maximumRange))
+      {
+        Serial.print("from: ");
+        Serial.print(DW1000Ranging.getDistantDevice()->getShortAddress(), HEX);
+        Serial.print("\t Range: ");
+        Serial.print(currentRange);
+        Serial.print(" m");
+        Serial.print("\t RX power: ");
+        Serial.print(DW1000Ranging.getDistantDevice()->getRXPower());
+        Serial.println(" dBm");
 
-    float projectedRange = DW1000Ranging.getDistantDevice()->getRange() * 2 / 5;
-    String strData = String(DW1000Ranging.getDistantDevice()->getShortAddress(), HEX);
-    strData += ", ";
-    strData += String(projectedRange);
+        float projectedRange = DW1000Ranging.getDistantDevice()->getRange() * 2 / 5;
+        String strData = String(DW1000Ranging.getDistantDevice()->getShortAddress(), HEX);
+        strData += ", ";
+        strData += String(projectedRange);
 
-    if(connected){
-//      Serial.print("Sending...");
-//      Serial.println(strData);
-      udp.beginPacket(udpAddress, udpPort);
-      udp.print(strData);
-      udp.endPacket();
+        if(connected){
+          udp.beginPacket(udpAddress, udpPort);
+          udp.print(strData);
+          udp.endPacket();
 
-    }
-
+        }
+      } 
 }
 
 void newDevice(DW1000Device *device)
